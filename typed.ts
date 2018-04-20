@@ -60,7 +60,7 @@ export class Typed {
         // check for an escape character before a pause value
         if (this.textContent.substr(this.strPos, 1) == "^") {
             var charPauseEnd = this.textContent.substr(this.strPos + 1).indexOf(" ");
-            var charPause = this.textContent.substr(this.strPos + 1, charPauseEnd);
+            var charPause = Number(this.textContent.substr(this.strPos + 1, charPauseEnd));
             // strip out the escape character and pause value so they're not printed
             this.textContent = this.textContent.replace("^" + charPause, "");
         } else {
