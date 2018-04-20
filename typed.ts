@@ -55,13 +55,24 @@ export class Typed {
 
     private keepTyping () {
         if (this.strPos === 0) {
-            this.toggleBlinking(false)
+            this.toggleBlinking(false);
         }
-
-        this.strPos += 1
-        const nextString = this.textContent.substr(0, this.strPos)
-        this.replaceText(nextString)
-        this.typewrite()
+        // check for an escape character before a pause value
+        if (this.textContent.substr(this.strPos, 1) == "^") {
+            var charPauseEnd = this.textContent.substr(this.strPos + 1).indexOf(" ");
+            var charPause = this.textContent.substr(this.strPos + 1, charPauseEnd);
+            // strip out the escape character and pause value so they're not printed
+            this.textContent = this.textContent.replace("^" + charPause, "");
+        } else {
+            var charPause = 0;
+        }
+        setTimeout(() => {
+            this.strPos += 1;
+            
+            var nextString = this.textContent.substr(0, this.strPos);
+            this.replaceText(nextString);
+            this.typewrite();
+        }, charPause);
     }
 
     private doneTyping () {
